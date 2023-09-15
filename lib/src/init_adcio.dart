@@ -11,17 +11,17 @@ class AdcioCore {
   static late String _clientId;
   static bool _isInitialized = false;
 
-  static Future<String> get deviceId async {
-    _deviceId ??= await _fetchDeviceId();
+  static String get deviceId {
+    assert(_isInitialized);
     return _deviceId!;
   }
 
-  static set deivceId(String id) {
+  static set deviceId(String id) {
     _deviceId = id;
   }
 
   static String get sessionId {
-    _sessionId ??= const Uuid().v4();
+    assert(_isInitialized);
     return _sessionId!;
   }
 
@@ -38,8 +38,10 @@ class AdcioCore {
     return _clientId;
   }
 
-  static void initializeApp(String clientId) {
+  static Future<void> initializeApp(String clientId) async {
     _clientId = clientId;
+    _deviceId = await _fetchDeviceId();
+    _sessionId = const Uuid().v4();
     _isInitialized = true;
   }
 

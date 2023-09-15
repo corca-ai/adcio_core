@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      Fluttertoast.showToast(msg: await AdcioCore.deviceId);
+                      Fluttertoast.showToast(msg: AdcioCore.deviceId);
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.amber,

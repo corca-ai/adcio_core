@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AdcioCore.init("asdfasdf");
+    AdcioCore.init("init adcio_core");
 
     return MaterialApp(
       home: Scaffold(

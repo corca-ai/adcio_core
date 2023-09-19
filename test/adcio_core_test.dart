@@ -4,6 +4,7 @@ import 'package:adcio_core/src/error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'adcio_core_mock.dart';
 
+/// FIXME: FakeAdcioCore 가 아닌 ADCIO core 에서 initializeApp 함수를 호출하는 방향으로 하시죠!
 void main() async {
   test(
       'Exception when requesting getter before calling initializeApp function.',

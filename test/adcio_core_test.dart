@@ -95,8 +95,7 @@ void main() async {
     );
   });
 
-  test('The value of the object variable must be changed using the setter.',
-      () {
+  test('change the value using the setter', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
     const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";

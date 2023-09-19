@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:adcio_core/adcio_core.dart';
 
 import 'package:flutter/material.dart';

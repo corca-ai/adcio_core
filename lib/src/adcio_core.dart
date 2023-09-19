@@ -26,7 +26,7 @@ class AdcioCore {
 
   /// deviceId's setter.
   /// ```dart
-  /// AdcioCore.deviceid = "set device id";
+  /// AdcioCore.deviceid = "DEVICE_UNIQUE_ID";
   /// ```
   static set deviceId(String id) {
     if (!_isInitialized) throw UnInitializedException();
@@ -44,7 +44,7 @@ class AdcioCore {
 
   /// sessionId's setter.
   /// ```dart
-  /// AdcioCore.sessionId = "set session id";
+  /// AdcioCore.sessionId = "RUNTIME_SESSION_ID";
   /// ```
   static set sessionId(String id) {
     if (!_isInitialized) throw UnInitializedException();

@@ -8,10 +8,12 @@ import 'error.dart';
 class AdcioCore {
   AdcioCore._();
 
+  static bool _isInitialized = false;
+
   static String? _deviceId;
   static String? _sessionId;
+  static late String _storeId;
   static late String _clientId;
-  static bool _isInitialized = false;
 
   /// deviceId's getter.
   /// ```dart
@@ -59,6 +61,15 @@ class AdcioCore {
     return _clientId;
   }
 
+  /// sessionId's setter.
+  /// ```dart
+  /// AdcioCore.storeId = "ADCIO_STORE_ID";
+  /// ```
+  static set storeId(String id) {
+    if (!_isInitialized) throw UnInitializedException();
+    _storeId = id;
+  }
+
   /// storeId's getter.
   /// storeId has the same value as clientId.
   /// ```dart
@@ -66,7 +77,7 @@ class AdcioCore {
   /// ```
   static String get storeId {
     if (!_isInitialized) throw UnInitializedException();
-    return _clientId;
+    return _storeId;
   }
 
   /// init ADCIO core values.
@@ -81,8 +92,10 @@ class AdcioCore {
   /// this function return `Future<void>`.
   static Future<void> initializeApp(String clientId) async {
     _clientId = clientId;
+    _storeId = _clientId;
     _deviceId = await _fetchDeviceId();
     _sessionId = const Uuid().v4();
+
     _isInitialized = true;
   }
 

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
+  /// this is important to call `AdcioCore.initializeApp(clientId)` function.
+  AdcioCore.initializeApp(clientId: 'f8f2e298-c168-4412-b82d-98fc5b4a114a');
+
   runApp(const MainApp());
 }
 
@@ -12,15 +15,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// this is important to call `AdcioCore.initializeApp(clientId)` function.
-    /// If you do not call this function, you will be restricted from using all the features in the AdcioCore package.
-    /// ```dart
-    /// AdcioCore.initializeApp("...");
-    /// ```
-    /// this function return `Future<void>`.
-
-    AdcioCore.initializeApp("init adcio_core");
-
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(

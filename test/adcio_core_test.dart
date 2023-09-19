@@ -1,17 +1,11 @@
-@GenerateNiceMocks([MockSpec<AdcioCore>()])
-import 'package:adcio_core/src/adcio_core.dart';
-
 import 'package:adcio_core/adcio_core.dart';
 import 'package:adcio_core/src/adcio_core_interface.dart';
 import 'package:adcio_core/src/error.dart';
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-
 import 'adcio_core_mock.dart';
 
 void main() async {
-  test('session id is all same value in runtime!', () {
+  test('sessionId must always be constant during runtime.', () {
     // define
     AdcioCoreInterface fakeSessionTestAdcioCore = FakeAdcioCore();
     fakeSessionTestAdcioCore.initializeApp("Sample Client ID");
@@ -28,7 +22,9 @@ void main() async {
     }
   });
 
-  test('do not call init function and get some field', () {
+  test(
+      'Exception when requesting getter before calling initializeApp function.',
+      () {
     // define
     AdcioCoreInterface fakeInitTestAdcioCore = FakeAdcioCore();
 
@@ -51,7 +47,7 @@ void main() async {
     );
   });
 
-  test('success safe case', () {
+  test('A code case that works normally.', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
     AdcioCoreInterface fakeSuccessTestAdcioCore = FakeAdcioCore();
@@ -68,7 +64,9 @@ void main() async {
     expect(fakeSuccessTestAdcioCore.storeId, sampleClientId);
   });
 
-  test('change field value use setter', () {
+  test('The value of the object variable must be changed using the setter.',
+      () {
+    // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
     const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
     const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
@@ -85,7 +83,8 @@ void main() async {
     expect(fakeSetterTestAdcioCore.sessionId, sampleSessionId);
   });
 
-  test('set field value before init', () {
+  test('Error when requesting setter before calling initializeApp function.',
+      () {
     // define
     AdcioCoreInterface fakeSetInitTestAdcioCore = FakeAdcioCore();
     const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
@@ -100,5 +99,18 @@ void main() async {
       () => fakeSetInitTestAdcioCore.sessionId = sampleSessionId,
       throwsA(isInstanceOf<UnInitializedException>()),
     );
+  });
+
+  test('clientId and storeId must always be the same.', () {
+    // define
+    const String sampleClientId = "djfmdje-djnfjd-qldmf";
+    AdcioCoreInterface fakeClientStoreIdTestAdcioCore = FakeAdcioCore();
+
+    // set
+    fakeClientStoreIdTestAdcioCore.initializeApp(sampleClientId);
+
+    // action
+    expect(fakeClientStoreIdTestAdcioCore.clientId,
+        fakeClientStoreIdTestAdcioCore.storeId);
   });
 }

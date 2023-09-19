@@ -67,4 +67,38 @@ void main() async {
         "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6");
     expect(fakeSuccessTestAdcioCore.storeId, sampleClientId);
   });
+
+  test('change field value use setter', () {
+    const String sampleClientId = "djfmdje-djnfjd-qldmf";
+    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
+    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
+
+    AdcioCoreInterface fakeSetterTestAdcioCore = FakeAdcioCore();
+
+    // set
+    fakeSetterTestAdcioCore.initializeApp(sampleClientId);
+    fakeSetterTestAdcioCore.deviceId = sampleDeviceId;
+    fakeSetterTestAdcioCore.sessionId = sampleSessionId;
+
+    // action
+    expect(fakeSetterTestAdcioCore.deviceId, sampleDeviceId);
+    expect(fakeSetterTestAdcioCore.sessionId, sampleSessionId);
+  });
+
+  test('set field value before init', () {
+    // define
+    AdcioCoreInterface fakeSetInitTestAdcioCore = FakeAdcioCore();
+    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
+    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
+
+    // action
+    expect(
+      () => fakeSetInitTestAdcioCore.deviceId = sampleDeviceId,
+      throwsA(isInstanceOf<UnInitializedException>()),
+    );
+    expect(
+      () => fakeSetInitTestAdcioCore.sessionId = sampleSessionId,
+      throwsA(isInstanceOf<UnInitializedException>()),
+    );
+  });
 }

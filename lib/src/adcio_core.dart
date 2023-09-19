@@ -26,6 +26,7 @@ class AdcioCore implements AdcioCoreInterface {
 
   @override
   set deviceId(String id) {
+    if (!_isInitialized) throw UnInitializedException();
     _deviceId = id;
   }
 
@@ -37,6 +38,7 @@ class AdcioCore implements AdcioCoreInterface {
 
   @override
   set sessionId(String id) {
+    if (!_isInitialized) throw UnInitializedException();
     _sessionId = id;
   }
 

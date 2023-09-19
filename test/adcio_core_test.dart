@@ -4,24 +4,8 @@ import 'package:adcio_core/src/error.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'adcio_core_mock.dart';
 
+/// FIXME: FakeAdcioCore 가 아닌 ADCIO core 에서 initializeApp 함수를 호출하는 방향으로 하시죠!
 void main() async {
-  test('sessionId must always be constant during runtime.', () {
-    // define
-    AdcioCoreInterface fakeSessionTestAdcioCore = FakeAdcioCore();
-    fakeSessionTestAdcioCore.initializeApp("Sample Client ID");
-    final List<String> sessionIds = [];
-
-    // set
-    for (int i = 0; i < 10; i++) {
-      sessionIds.add(fakeSessionTestAdcioCore.sessionId);
-    }
-
-    // action
-    for (int i = 1; i < 10; i++) {
-      expect(sessionIds[i - 1], sessionIds[i]);
-    }
-  });
-
   test(
       'Exception when requesting getter before calling initializeApp function.',
       () {
@@ -64,23 +48,34 @@ void main() async {
     expect(fakeSuccessTestAdcioCore.storeId, sampleClientId);
   });
 
-  test('The value of the object variable must be changed using the setter.',
-      () {
+  test('clientId and storeId must always be the same.', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
-    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
-
-    AdcioCoreInterface fakeSetterTestAdcioCore = FakeAdcioCore();
+    AdcioCoreInterface fakeClientStoreIdTestAdcioCore = FakeAdcioCore();
 
     // set
-    fakeSetterTestAdcioCore.initializeApp(sampleClientId);
-    fakeSetterTestAdcioCore.deviceId = sampleDeviceId;
-    fakeSetterTestAdcioCore.sessionId = sampleSessionId;
+    fakeClientStoreIdTestAdcioCore.initializeApp(sampleClientId);
 
     // action
-    expect(fakeSetterTestAdcioCore.deviceId, sampleDeviceId);
-    expect(fakeSetterTestAdcioCore.sessionId, sampleSessionId);
+    expect(fakeClientStoreIdTestAdcioCore.clientId,
+        fakeClientStoreIdTestAdcioCore.storeId);
+  });
+
+  test('sessionId must always be constant during runtime.', () {
+    // define
+    AdcioCoreInterface fakeSessionTestAdcioCore = FakeAdcioCore();
+    fakeSessionTestAdcioCore.initializeApp("Sample Client ID");
+    final List<String> sessionIds = [];
+
+    // set
+    for (int i = 0; i < 10; i++) {
+      sessionIds.add(fakeSessionTestAdcioCore.sessionId);
+    }
+
+    // action
+    for (int i = 1; i < 10; i++) {
+      expect(sessionIds[i - 1], sessionIds[i]);
+    }
   });
 
   test('Error when requesting setter before calling initializeApp function.',
@@ -101,16 +96,21 @@ void main() async {
     );
   });
 
-  test('clientId and storeId must always be the same.', () {
+  test('change the value using the setter', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    AdcioCoreInterface fakeClientStoreIdTestAdcioCore = FakeAdcioCore();
+    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
+    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
+
+    AdcioCoreInterface fakeSetterTestAdcioCore = FakeAdcioCore();
 
     // set
-    fakeClientStoreIdTestAdcioCore.initializeApp(sampleClientId);
+    fakeSetterTestAdcioCore.initializeApp(sampleClientId);
+    fakeSetterTestAdcioCore.deviceId = sampleDeviceId;
+    fakeSetterTestAdcioCore.sessionId = sampleSessionId;
 
     // action
-    expect(fakeClientStoreIdTestAdcioCore.clientId,
-        fakeClientStoreIdTestAdcioCore.storeId);
+    expect(fakeSetterTestAdcioCore.deviceId, sampleDeviceId);
+    expect(fakeSetterTestAdcioCore.sessionId, sampleSessionId);
   });
 }

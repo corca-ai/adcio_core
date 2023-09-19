@@ -90,11 +90,15 @@ class AdcioCore {
   /// ```
   ///
   /// this function return `Future<void>`.
-  static Future<void> initializeApp({required String clientId}) async {
+  static Future<void> initializeApp({
+    required String clientId,
+    String? deviceId,
+    String? sessionId,
+  }) async {
     _clientId = clientId;
     _storeId = _clientId;
-    _deviceId = await _fetchDeviceId();
-    _sessionId = const Uuid().v4();
+    _deviceId = deviceId ?? await _fetchDeviceId();
+    _sessionId = sessionId ?? const Uuid().v4();
 
     _isInitialized = true;
   }

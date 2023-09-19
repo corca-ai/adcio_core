@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AdcioCore.instance.initializeApp("init adcio_core");
+    AdcioCore().initializeApp("init adcio_core");
 
     return MaterialApp(
       home: Scaffold(
@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      Fluttertoast.showToast(msg: AdcioCore.instance.deviceId);
+                      Fluttertoast.showToast(msg: AdcioCore().deviceId);
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.amber,
@@ -31,8 +31,8 @@ class MainApp extends StatelessWidget {
                     child: const Text("get Device Id"),
                   ),
                   TextButton(
-                    onPressed: () => Fluttertoast.showToast(
-                        msg: AdcioCore.instance.sessionId),
+                    onPressed: () =>
+                        Fluttertoast.showToast(msg: AdcioCore().sessionId),
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.indigo,
                     ),
@@ -40,7 +40,7 @@ class MainApp extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Fluttertoast.showToast(msg: AdcioCore.instance.clientId);
+                      Fluttertoast.showToast(msg: AdcioCore().clientId);
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.blue,

@@ -7,11 +7,12 @@ import 'package:uuid/uuid.dart';
 import 'error.dart';
 
 class AdcioCore implements AdcioCoreInterface {
+  AdcioCore._();
   static final AdcioCore _instance = AdcioCore._();
 
-  static AdcioCore get instance => _instance;
-
-  AdcioCore._();
+  factory AdcioCore() {
+    return _instance;
+  }
 
   static String? _deviceId;
   static String? _sessionId;

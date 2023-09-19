@@ -1,18 +1,12 @@
 import 'dart:io';
 
-import 'package:adcio_core/src/adcio_core_interface.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
 import 'error.dart';
 
-class AdcioCore implements AdcioCoreInterface {
+class AdcioCore {
   AdcioCore._();
-  static final AdcioCore _instance = AdcioCore._();
-
-  factory AdcioCore() {
-    return _instance;
-  }
 
   static String? _deviceId;
   static String? _sessionId;
@@ -21,40 +15,36 @@ class AdcioCore implements AdcioCoreInterface {
 
   /// deviceId's getter.
   /// ```dart
-  /// String deviceId = AdcioCore().deviceId;
+  /// String deviceId = AdcioCore.deviceId;
   /// ```
-  @override
-  String get deviceId {
+  static String get deviceId {
     if (!_isInitialized) throw UnInitializedException();
     return _deviceId!;
   }
 
   /// deviceId's setter.
   /// ```dart
-  /// AdcioCore().deviceid = "set device id";
+  /// AdcioCore.deviceid = "set device id";
   /// ```
-  @override
-  set deviceId(String id) {
+  static set deviceId(String id) {
     if (!_isInitialized) throw UnInitializedException();
     _deviceId = id;
   }
 
   /// sessionId's getter.
   /// ```dart
-  /// String sessionId = AdcioCore().sessionId;
+  /// String sessionId = AdcioCore.sessionId;
   /// ```
-  @override
-  String get sessionId {
+  static String get sessionId {
     if (!_isInitialized) throw UnInitializedException();
     return _sessionId!;
   }
 
   /// sessionId's setter.
   /// ```dart
-  /// AdcioCore().sessionId = "set session id";
+  /// AdcioCore.sessionId = "set session id";
   /// ```
-  @override
-  set sessionId(String id) {
+  static set sessionId(String id) {
     if (!_isInitialized) throw UnInitializedException();
     _sessionId = id;
   }
@@ -62,10 +52,9 @@ class AdcioCore implements AdcioCoreInterface {
   /// clientId's getter.
   /// clientId is initialized with the value entered as a parameter while you call the initializeApp() function.
   /// ```dart
-  /// String clientId = AdcioCore().clientId;
+  /// String clientId = AdcioCore.clientId;
   /// ```
-  @override
-  String get clientId {
+  static String get clientId {
     if (!_isInitialized) throw UnInitializedException();
     return _clientId;
   }
@@ -73,10 +62,9 @@ class AdcioCore implements AdcioCoreInterface {
   /// storeId's getter.
   /// storeId has the same value as clientId.
   /// ```dart
-  /// String storeId = AdcioCore().storeId;
+  /// String storeId = AdcioCore.storeId;
   /// ```
-  @override
-  String get storeId {
+  static String get storeId {
     if (!_isInitialized) throw UnInitializedException();
     return _clientId;
   }
@@ -85,12 +73,13 @@ class AdcioCore implements AdcioCoreInterface {
   /// this function is so important to use adcio_core function.
   /// Always call this function first.
   /// If you do not call this function, you will be restricted from using all the features in the adcio_core package.
+  ///
   ///```dart
-  /// AdcioCore().initializeApp("...");
+  /// AdcioCore.initializeApp("...");
   /// ```
+  ///
   /// this function return `Future<void>`.
-  @override
-  Future<void> initializeApp(String clientId) async {
+  static Future<void> initializeApp(String clientId) async {
     _clientId = clientId;
     _deviceId = await _fetchDeviceId();
     _sessionId = const Uuid().v4();

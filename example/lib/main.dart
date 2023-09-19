@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
-  /// this is important to call `AdcioCore.initializeApp(clientId)` function.
+  /// this is important to call `AdcioCore.initializeApp(clientId: 'ADCIO_STORE_ID')` function.
   AdcioCore.initializeApp(clientId: 'f8f2e298-c168-4412-b82d-98fc5b4a114a');
 
   runApp(const MainApp());
@@ -29,9 +29,9 @@ class MainApp extends StatelessWidget {
                       /// You can get the device id through the AdcioCore() object.
                       /// Of course, you can also set the device id.
                       /// ```dart
-                      /// String deviceId = AdcioCore.deviceId; // result: sample device id
-                      /// AdcioCore.deviceid = "set device id"; // set device id value
-                      /// String deviceId = AdcioCore.deviceId; // result: set device id
+                      /// String deviceId = AdcioCore.deviceId;
+                      /// AdcioCore.deviceid = "DEVICE_UNIQUE_ID";
+                      /// String deviceId = AdcioCore.deviceId; // result: DEVICE_UNIQUE_ID
                       /// ```
 
                       final String deviceId = AdcioCore.deviceId;
@@ -47,9 +47,9 @@ class MainApp extends StatelessWidget {
                       /// You can get the session id through the AdcioCore() object.
                       /// Of course, you can also set the session id.
                       /// ```dart
-                      /// String sessionId = AdcioCore.sessionId; // result: sample session id
-                      /// AdcioCore.sessionId = "set session id"; // set session id value
-                      /// String sessionId = AdcioCore.sessionId; // result: set session id
+                      /// String sessionId = AdcioCore.sessionId;
+                      /// AdcioCore.sessionId = "RUNTIME_SESSION_ID";
+                      /// String sessionId = AdcioCore.sessionId; // result: RUNTIME_SESSION_ID
                       /// ```
 
                       final String sessionId = AdcioCore.sessionId;

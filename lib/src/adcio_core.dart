@@ -85,12 +85,12 @@ class AdcioCore {
   /// Always call this function first.
   /// If you do not call this function, you will be restricted from using all the features in the adcio_core package.
   ///
-  ///```dart
-  /// AdcioCore.initializeApp("...");
+  /// ```dart
+  /// AdcioCore.initializeApp(clientId: 'ADCIO_STORE_ID');
   /// ```
   ///
   /// this function return `Future<void>`.
-  static Future<void> initializeApp(String clientId) async {
+  static Future<void> initializeApp({required String clientId}) async {
     _clientId = clientId;
     _storeId = _clientId;
     _deviceId = await _fetchDeviceId();

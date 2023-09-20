@@ -1,7 +1,24 @@
 import 'package:adcio_core/adcio_core.dart';
+@GenerateNiceMocks([MockSpec<FetchDeviceId>()])
+import 'package:adcio_core/src/fetch_device_id.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+
+import 'adcio_core_test.mocks.dart';
 
 void main() async {
+  const String sampleClientId = "djfmdje-djnfjd-qldmf";
+  final FetchDeviceId fetchDeviceId = MockFetchDeviceId();
+
+  setUp(() {
+    when(
+      fetchDeviceId.call(),
+    ).thenAnswer(
+      (_) async => "DEVICE_UNIQUE_ID",
+    );
+  });
+
   test(
       'Exception when requesting getter before calling initializeApp function.',
       () {
@@ -24,74 +41,59 @@ void main() async {
     );
   });
 
-  test('Error when requesting setter before calling initializeApp function.',
-      () {
-    // define
-    const String sampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
-    const String sampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
-
-    // action
-    expect(
-      () => AdcioCore.deviceId = sampleDeviceId,
-      throwsA(isInstanceOf<UnInitializedException>()),
-    );
-    expect(
-      () => AdcioCore.sessionId = sampleSessionId,
-      throwsA(isInstanceOf<UnInitializedException>()),
-    );
-  });
-
-  test('A code case that works normally.', () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    const String sampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
-    const String sampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
-
+  test('A code case that works normally.', () async {
     // set
-    AdcioCore.initializeApp(
+    await AdcioCore.initializeApp(
       clientId: sampleClientId,
-      deviceId: sampleDeviceId,
-      sessionId: sampleSessionId,
     );
+
+    final deviceId = AdcioCore.deviceId;
+    final sessionId = AdcioCore.sessionId;
 
     // action
     expect(AdcioCore.clientId, sampleClientId);
-    expect(AdcioCore.deviceId, sampleDeviceId);
-    expect(AdcioCore.sessionId, sampleSessionId);
+    expect(AdcioCore.deviceId, deviceId);
+    expect(AdcioCore.sessionId, sessionId);
     expect(AdcioCore.storeId, sampleClientId);
   });
 
-  test('clientId and storeId must always be the same.', () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-
+  test('clientId and storeId must always be the same.', () async {
     // set
-    AdcioCore.initializeApp(
+    await AdcioCore.initializeApp(
       clientId: sampleClientId,
-      deviceId: "6D79D039-3FE3-4887-B0BC-FDDCBD758C99",
-      sessionId: "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6",
     );
 
     // action
     expect(AdcioCore.clientId, AdcioCore.storeId);
   });
 
-  test('change the value using the setter', () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-
-    const String oldSampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
-    const String newSampleDeviceId = "39DJ9DSW-0OKN-9876-NKJ3-POIEJXKFHJE3";
-
-    const String oldSampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
-    const String newSampleSessionId = "djendkem-ponk-12f3-adf1-jtrmvu54e7a5";
-
+  test('Verifying if the sessionId remains the same during runtime', () async {
     // set
-    AdcioCore.initializeApp(
+    await AdcioCore.initializeApp(
       clientId: sampleClientId,
-      deviceId: oldSampleDeviceId,
-      sessionId: oldSampleSessionId,
     );
+
+    // verify1
+    final sessionId = AdcioCore.sessionId;
+    expect(sessionId, AdcioCore.sessionId);
+
+    // verify2
+    Future.delayed(const Duration(seconds: 2));
+    expect(sessionId, AdcioCore.sessionId);
+  });
+
+  test('Change the value using the setter', () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final oldSampleDeviceId = AdcioCore.deviceId;
+    final oldSampleSessionId = AdcioCore.sessionId;
+
+    // use setter
+    const String newSampleDeviceId = "39DJ9DSW-0OKN-9876-NKJ3-POIEJXKFHJE3";
+    const String newSampleSessionId = "djendkem-ponk-12f3-adf1-jtrmvu54e7a5";
 
     AdcioCore.deviceId = newSampleDeviceId;
     AdcioCore.sessionId = newSampleSessionId;

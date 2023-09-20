@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
+import 'package:adcio_core/src/fetch_device_id.dart';
 import 'package:uuid/uuid.dart';
 
 import 'error.dart';
@@ -95,25 +93,14 @@ class AdcioCore {
     String? deviceId,
     String? sessionId,
   }) async {
+    final fetchDeviceId = FetchDeviceId();
+    final defaultDeviceId = await fetchDeviceId();
+
     _clientId = clientId;
     _storeId = _clientId;
-    _deviceId = deviceId ?? await _fetchDeviceId();
+    _deviceId = deviceId ?? defaultDeviceId;
     _sessionId = sessionId ?? const Uuid().v4();
 
     _isInitialized = true;
-  }
-
-  static Future<String> _fetchDeviceId() async {
-    final deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      final info = await deviceInfo.androidInfo;
-      return info.id;
-    } else if (Platform.isIOS) {
-      final info = await deviceInfo.iosInfo;
-      return info.identifierForVendor ?? '${DateTime.now()}';
-    } else {
-      return '${DateTime.now()}';
-    }
   }
 }

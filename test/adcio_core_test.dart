@@ -64,14 +64,12 @@ void main() async {
   test('clientId and storeId must always be the same.', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    const String sampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
-    const String sampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
 
     // set
     AdcioCore.initializeApp(
       clientId: sampleClientId,
-      deviceId: sampleDeviceId,
-      sessionId: sampleSessionId,
+      deviceId: "6D79D039-3FE3-4887-B0BC-FDDCBD758C99",
+      sessionId: "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6",
     );
 
     // action
@@ -81,21 +79,28 @@ void main() async {
   test('change the value using the setter', () {
     // define
     const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    const String sampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
-    const String sampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
+
+    const String oldSampleDeviceId = "6D79D039-3FE3-4887-B0BC-FDDCBD758C99";
+    const String newSampleDeviceId = "39DJ9DSW-0OKN-9876-NKJ3-POIEJXKFHJE3";
+
+    const String oldSampleSessionId = "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6";
+    const String newSampleSessionId = "djendkem-ponk-12f3-adf1-jtrmvu54e7a5";
 
     // set
     AdcioCore.initializeApp(
       clientId: sampleClientId,
-      deviceId: sampleDeviceId,
-      sessionId: sampleSessionId,
+      deviceId: oldSampleDeviceId,
+      sessionId: oldSampleSessionId,
     );
 
-    AdcioCore.deviceId = sampleDeviceId;
-    AdcioCore.sessionId = sampleSessionId;
+    AdcioCore.deviceId = newSampleDeviceId;
+    AdcioCore.sessionId = newSampleSessionId;
 
     // action
-    expect(AdcioCore.deviceId, sampleDeviceId);
-    expect(AdcioCore.sessionId, sampleSessionId);
+    expect(AdcioCore.deviceId, isNot(equals(oldSampleDeviceId)));
+    expect(AdcioCore.deviceId, equals(newSampleDeviceId));
+
+    expect(AdcioCore.sessionId, isNot(equals(oldSampleSessionId)));
+    expect(AdcioCore.sessionId, equals(newSampleSessionId));
   });
 }

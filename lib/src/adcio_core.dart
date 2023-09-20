@@ -93,9 +93,12 @@ class AdcioCore {
     String? deviceId,
     String? sessionId,
   }) async {
+    final fetchDeviceId = FetchDeviceId();
+    final defaultDeviceId = await fetchDeviceId();
+
     _clientId = clientId;
     _storeId = _clientId;
-    _deviceId = deviceId ?? await fetchDeviceId();
+    _deviceId = deviceId ?? defaultDeviceId;
     _sessionId = sessionId ?? const Uuid().v4();
 
     _isInitialized = true;

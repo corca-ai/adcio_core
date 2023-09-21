@@ -9,7 +9,7 @@ To learn more about ADCIO, please visit the [ADCIO website](https://www.adcio.ai
 <!--
 TODO Documentation introduction url 수정하기.
 -->
-To get started with ADCIO account, please [see the documentation.](https://docs.adcio.ai/en/docs/introduction)
+To get started with ADCIO account, please register [ADCIO account](https://app.adcio.ai/en/)
 
 ## Usage
 There is a simple use example:

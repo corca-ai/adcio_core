@@ -105,4 +105,24 @@ void main() async {
     expect(AdcioCore.sessionId, isNot(equals(oldSampleSessionId)));
     expect(AdcioCore.sessionId, equals(newSampleSessionId));
   });
+
+  test(
+      'SessionId should not change if initializeApp function is called multiple times',
+      () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final oldSampleSessionId = AdcioCore.sessionId;
+
+    // use setter
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final newSampleSessionId = AdcioCore.sessionId;
+
+    expect(oldSampleSessionId, equals(newSampleSessionId));
+  });
 }

@@ -99,7 +99,7 @@ class AdcioCore {
     _clientId = clientId;
     _storeId = _clientId;
     _deviceId = deviceId ?? defaultDeviceId;
-    _sessionId = sessionId ?? _sessionId ?? const Uuid().v4();
+    _sessionId = sessionId ?? (_sessionId ?? const Uuid().v4());
 
     _isInitialized = true;
   }

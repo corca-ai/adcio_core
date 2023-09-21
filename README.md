@@ -1,4 +1,5 @@
 #  adcio_core
+[![pub package](https://img.shields.io/pub/v/adcio_core.svg)](https://pub.dev/packages/adcio_core)
 
 A Flutter plugin that stores and provides resources commonly used by ADCIO.  
 Because all plugins in ADCIO depend on adcio_core, the function of adcio_core must be called first.

@@ -1,116 +1,128 @@
 import 'package:adcio_core/adcio_core.dart';
-import 'package:adcio_core/src/adcio_core_interface.dart';
-import 'package:adcio_core/src/error.dart';
+@GenerateNiceMocks([MockSpec<FetchDeviceId>()])
+import 'package:adcio_core/src/fetch_device_id.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'adcio_core_mock.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+
+import 'adcio_core_test.mocks.dart';
 
 void main() async {
-  test('sessionId must always be constant during runtime.', () {
-    // define
-    AdcioCoreInterface fakeSessionTestAdcioCore = FakeAdcioCore();
-    fakeSessionTestAdcioCore.initializeApp("Sample Client ID");
-    final List<String> sessionIds = [];
+  const String sampleClientId = "djfmdje-djnfjd-qldmf";
+  final FetchDeviceId fetchDeviceId = MockFetchDeviceId();
 
-    // set
-    for (int i = 0; i < 10; i++) {
-      sessionIds.add(fakeSessionTestAdcioCore.sessionId);
-    }
-
-    // action
-    for (int i = 1; i < 10; i++) {
-      expect(sessionIds[i - 1], sessionIds[i]);
-    }
+  setUp(() {
+    when(
+      fetchDeviceId.call(),
+    ).thenAnswer(
+      (_) async => "DEVICE_UNIQUE_ID",
+    );
   });
 
   test(
       'Exception when requesting getter before calling initializeApp function.',
       () {
-    // define
-    AdcioCoreInterface fakeInitTestAdcioCore = FakeAdcioCore();
-
     // action
     expect(
-      () => fakeInitTestAdcioCore.clientId,
+      () => AdcioCore.clientId,
       throwsA(isInstanceOf<UnInitializedException>()),
     );
     expect(
-      () => fakeInitTestAdcioCore.storeId,
+      () => AdcioCore.storeId,
       throwsA(isInstanceOf<UnInitializedException>()),
     );
     expect(
-      () => fakeInitTestAdcioCore.sessionId,
+      () => AdcioCore.sessionId,
       throwsA(isInstanceOf<UnInitializedException>()),
     );
     expect(
-      () => fakeInitTestAdcioCore.deviceId,
+      () => AdcioCore.deviceId,
       throwsA(isInstanceOf<UnInitializedException>()),
     );
   });
 
-  test('A code case that works normally.', () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    AdcioCoreInterface fakeSuccessTestAdcioCore = FakeAdcioCore();
-
+  test('A code case that works normally.', () async {
     // set
-    fakeSuccessTestAdcioCore.initializeApp(sampleClientId);
-
-    // action
-    expect(fakeSuccessTestAdcioCore.clientId, sampleClientId);
-    expect(fakeSuccessTestAdcioCore.deviceId,
-        "6D79D039-3FE3-4887-B0BC-FDDCBD758C99");
-    expect(fakeSuccessTestAdcioCore.sessionId,
-        "a3e0efcc-bbed-4c73-b001-cd3d0c54e7a6");
-    expect(fakeSuccessTestAdcioCore.storeId, sampleClientId);
-  });
-
-  test('The value of the object variable must be changed using the setter.',
-      () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
-    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
-
-    AdcioCoreInterface fakeSetterTestAdcioCore = FakeAdcioCore();
-
-    // set
-    fakeSetterTestAdcioCore.initializeApp(sampleClientId);
-    fakeSetterTestAdcioCore.deviceId = sampleDeviceId;
-    fakeSetterTestAdcioCore.sessionId = sampleSessionId;
-
-    // action
-    expect(fakeSetterTestAdcioCore.deviceId, sampleDeviceId);
-    expect(fakeSetterTestAdcioCore.sessionId, sampleSessionId);
-  });
-
-  test('Error when requesting setter before calling initializeApp function.',
-      () {
-    // define
-    AdcioCoreInterface fakeSetInitTestAdcioCore = FakeAdcioCore();
-    const String sampleDeviceId = "fjenxje-dnfbd-djend0-dndnew";
-    const String sampleSessionId = "djen-dnms-denc-nehj-mqmdjx";
-
-    // action
-    expect(
-      () => fakeSetInitTestAdcioCore.deviceId = sampleDeviceId,
-      throwsA(isInstanceOf<UnInitializedException>()),
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
     );
-    expect(
-      () => fakeSetInitTestAdcioCore.sessionId = sampleSessionId,
-      throwsA(isInstanceOf<UnInitializedException>()),
-    );
-  });
 
-  test('clientId and storeId must always be the same.', () {
-    // define
-    const String sampleClientId = "djfmdje-djnfjd-qldmf";
-    AdcioCoreInterface fakeClientStoreIdTestAdcioCore = FakeAdcioCore();
-
-    // set
-    fakeClientStoreIdTestAdcioCore.initializeApp(sampleClientId);
+    final deviceId = AdcioCore.deviceId;
+    final sessionId = AdcioCore.sessionId;
 
     // action
-    expect(fakeClientStoreIdTestAdcioCore.clientId,
-        fakeClientStoreIdTestAdcioCore.storeId);
+    expect(AdcioCore.clientId, sampleClientId);
+    expect(AdcioCore.deviceId, deviceId);
+    expect(AdcioCore.sessionId, sessionId);
+    expect(AdcioCore.storeId, sampleClientId);
+  });
+
+  test('clientId and storeId must always be the same.', () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    // action
+    expect(AdcioCore.clientId, AdcioCore.storeId);
+  });
+
+  test('Verifying if the sessionId remains the same during runtime', () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    // verify1
+    final sessionId = AdcioCore.sessionId;
+    expect(sessionId, AdcioCore.sessionId);
+
+    // verify2
+    Future.delayed(const Duration(seconds: 2));
+    expect(sessionId, AdcioCore.sessionId);
+  });
+
+  test('Change the value using the setter', () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final oldSampleDeviceId = AdcioCore.deviceId;
+    final oldSampleSessionId = AdcioCore.sessionId;
+
+    // use setter
+    const String newSampleDeviceId = "39DJ9DSW-0OKN-9876-NKJ3-POIEJXKFHJE3";
+    const String newSampleSessionId = "djendkem-ponk-12f3-adf1-jtrmvu54e7a5";
+
+    AdcioCore.deviceId = newSampleDeviceId;
+    AdcioCore.sessionId = newSampleSessionId;
+
+    // action
+    expect(AdcioCore.deviceId, isNot(equals(oldSampleDeviceId)));
+    expect(AdcioCore.deviceId, equals(newSampleDeviceId));
+
+    expect(AdcioCore.sessionId, isNot(equals(oldSampleSessionId)));
+    expect(AdcioCore.sessionId, equals(newSampleSessionId));
+  });
+
+  test(
+      'SessionId should not change if initializeApp function is called multiple times',
+      () async {
+    // set
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final oldSampleSessionId = AdcioCore.sessionId;
+
+    // use setter
+    await AdcioCore.initializeApp(
+      clientId: sampleClientId,
+    );
+
+    final newSampleSessionId = AdcioCore.sessionId;
+
+    expect(oldSampleSessionId, equals(newSampleSessionId));
   });
 }

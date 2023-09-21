@@ -1,7 +1,7 @@
 name: adcio_core
-description: A new Flutter package project.
+description: stores and provides resources commonly used by ADCIO.
 version: 0.0.1
-homepage:
+homepage: https://github.com/corca-ai/adcio_core
 
 environment:
   sdk: '>=3.0.6 <4.0.0'

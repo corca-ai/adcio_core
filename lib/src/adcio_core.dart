@@ -59,15 +59,6 @@ class AdcioCore {
     return _clientId;
   }
 
-  /// sessionId's setter.
-  /// ```dart
-  /// AdcioCore.storeId = 'ADCIO_STORE_ID';
-  /// ```
-  static set storeId(String id) {
-    if (!_isInitialized) throw UnInitializedException();
-    _storeId = id;
-  }
-
   /// storeId's getter.
   /// storeId has the same value as clientId.
   /// ```dart

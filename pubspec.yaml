@@ -1,6 +1,6 @@
 name: adcio_core
 description: stores and provides resources commonly used by ADCIO.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/corca-ai/adcio_core
 
 environment:

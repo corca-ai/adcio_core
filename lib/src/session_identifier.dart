@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
 
-class SessionClient {
+class SessionIdentifier {
   static final String _identifier = _createIdentifier();
 
   String get identifier => _identifier;
@@ -9,7 +9,7 @@ class SessionClient {
     return const Uuid().v4();
   }
 
-  String loadSessionId() {
+  String loadId() {
     return identifier;
   }
 }

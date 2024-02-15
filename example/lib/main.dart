@@ -26,8 +26,7 @@ class MainApp extends StatelessWidget {
                   TextButton(
                     onPressed: () async {
                       /// You can get the device id through the FetchDeviceId() object.
-                      final fetchDeviceId = FetchDeviceId();
-                      final String deviceId = await fetchDeviceId();
+                      final String deviceId = await DeviceIdentifier().loadId();
                       Fluttertoast.showToast(msg: deviceId);
                     },
                     style: TextButton.styleFrom(
@@ -38,7 +37,7 @@ class MainApp extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       /// You can get the session id through the SessionClient() object.
-                      final String sessionId = SessionClient().loadSessionId();
+                      final String sessionId = SessionIdentifier().loadId();
                       Fluttertoast.showToast(msg: sessionId);
                     },
                     style: TextButton.styleFrom(

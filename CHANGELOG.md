@@ -1,3 +1,6 @@
+## 1.0.1
+* update readme docs due to adcio core changes
+
 ## 1.0.0
 * change to provide commonly used values from the ADCIO SDK during non-side-effect behaviors
 

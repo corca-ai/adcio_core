@@ -1,3 +1,6 @@
+## 1.0.0
+* change to provide commonly used values from the ADCIO SDK during non-side-effect behaviors
+
 ## 0.1.1
 * remove setter for property named storeId.
 

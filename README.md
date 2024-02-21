@@ -2,7 +2,7 @@
 [![pub package](https://img.shields.io/pub/v/adcio_core.svg)](https://pub.dev/packages/adcio_core)
 
 Provides values commonly used by the ADCIO SDK during side-effect-free behavior.
-Typical values provided are sessionId and deviceId.
+Typical values provided are deviceId and sessionId.
 
 To learn more about ADCIO, please visit the [ADCIO website](https://www.adcio.ai/)
 

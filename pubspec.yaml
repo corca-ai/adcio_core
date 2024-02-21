@@ -1,6 +1,6 @@
 name: adcio_core
-description: stores and provides resources commonly used by ADCIO.
-version: 0.1.1
+description: Provides values commonly used by the ADCIO SDK during side-effect-free behavior.
+version: 1.0.0
 homepage: https://github.com/corca-ai/adcio_core
 
 environment:

@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:adcio_core/src/fetch_device_id.dart' as _i2;
+import 'package:adcio_core/src/device_identifier.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -19,14 +19,14 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [FetchDeviceId].
+/// A class which mocks [DeviceIdentifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockFetchDeviceId extends _i1.Mock implements _i2.FetchDeviceId {
+class MockDeviceIdentifier extends _i1.Mock implements _i2.DeviceIdentifier {
   @override
-  _i3.Future<String> call() => (super.noSuchMethod(
+  _i3.Future<String> loadId() => (super.noSuchMethod(
         Invocation.method(
-          #call,
+          #loadId,
           [],
         ),
         returnValue: _i3.Future<String>.value(''),

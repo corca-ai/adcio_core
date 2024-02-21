@@ -1,4 +1,4 @@
 library adcio_core;
 
-export 'src/adcio_core.dart';
-export 'src/error.dart';
+export 'src/device_identifier.dart';
+export 'src/session_identifier.dart';
